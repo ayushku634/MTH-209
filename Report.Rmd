@@ -1,0 +1,511 @@
+---
+title: Analysing Airline Dataset using Sentiment analysis and Price prediction in
+  python
+author: 'Members : Ayush Kumar Yadav, Rishikesh Dargad, Kritika Jaimini, Sohini Bhadra, Sneha Karmakar'
+date: "2024-04-06"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+library(htmlwidgets)
+library(IRdisplay)
+library(ggplot2)
+library(plotly)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+## Executive Summary
+
+In this report, we will perform price prediction and sentiment analysis using R and python. We will first gather historical price data, then build a predictive model to forecast future prices. 
+
+
+
+We study different columns of the table and try to co-relate them with others and find a relation between those two.
+
+We try to find and analyze those key factors like class of travel, duration of fight, etc. which helps us understand the pricing of tickets to plan and schedule our air travel in efficient way.
+
+Additionally, we will analyze sentiment data from the obtained dataset to gauge sentiment of customers.
+
+# Price Prediction
+
+## Table of Contents
+
+### 1. Introduction
+
+1.1 Overview
+
+1.2 Questions we imposed
+
+1.3 Scope of Analysis
+
+### 2. Explaining the Dataset
+
+2.1 Overview of Dataset
+
+2.2 Problems with the dataset
+
+
+### 3. Data collection and methods
+
+3.1 Data Sources
+
+3.2 Variables Considered
+
+3.3 Data Preprocessing
+
+
+
+### 4. Visualizing the dataset
+
+4.1 Libraries used in the process
+
+4.2 Plots we have used
+
+4.3 Plot of  Number of flights of Airlines in India.
+
+4.4 Plot of Ticket Costs
+
+4.5 Plot of Duration of flights
+
+4.6 Plot on Tickets booked beffore X days
+
+4.7 Plot of Departure time and Arrival time
+
+4.8 Plot on Airline ticket price based on the source and destination cities.
+
+4.9 Plot of Distribution of most Airlines in economy class
+
+4.10 Plot of Total price by Airline in economy class
+
+4.11 Plot of source city in economy class.
+
+4.12 Plot of most airlines in bussiness class and outcome.
+
+4.13 Plot of cities used bussines class tickets
+
+4.14 Correlation Heatmap
+
+4.15 
+
+
+#### 5. Modeling
+
+### 6. Conclusion
+
+### 7. References
+
+## 1.Introduction
+
+### 1.1 Overview
+In this part of project, we study the data which is in tabular format using various Python libraries like Pandas, Numpy, Matplotlib and Seaborn.
+
+We study different columns of the table and try to co-relate them with others and find a relation between those two.
+
+We try to find and analyze those key factors like class of travel, duration of fight, etc. which helps us understand the pricing of tickets to plan and schedule our air travel in efficient way
+
+### 1.2 Questions We imposed
+
+-  What are number of flights operated by each airline?
+-  What is price range according to class of travel?
+-  What is availability of Tickets according to class of travel?
+-  What is price of ticket for different airlines based on duration of flight?
+-  How do ticket prices vary across different airlines and class of travel?
+-  How do airline ticket prices vary depending on when you buy them?
+- How does price of ticket vary depending on duration?
+- How does ticket price vary according to departure time and arrival time?
+-  How does ticket price vary depending on source and destination?
+- How does price of tickets vary based on no. of stops and airline?
+
+
+
+### 1.3 Scope of Analysis
+The study covers detailed exploratory data analysis on different key factors of an Indian Airline Dataset.
+
+The project also enables us to predict the price of different airlines based on different factors using LINEAR REGRESSION MODEL.
+
+
+
+### 2. Explaing the dataset
+
+2.1  Overview of Dataset
+
+
+The dataset is a .csv file format that we have obtained from google search 
+The dataset consits of 3000154 rows and 12 columns.
+
+
+
+In airline column there are 6 unique airlines: SpiceJet, AirAsia, Vistara, GO_FIRST, Indigo, Air_India
+In source_city & destination_city there are 6 unique cities: Delhi, Mumbai, Bangalore, Kolkata, Hyderabad, Chennai
+In arrival & departure columns there are 6 different timings: Night, Morning, Early_Morning, Afternoon, Evening, Late_Night
+In class column there are 2 different classes: Economy, Business
+
+2.2 Problems with the Dataset
+
+The main problem with Dataset is that the data is two to three years old so the price prediction might not match the current scenario of prices of airline tickets.
+
+
+
+3. Data collection and methods
+
+3.1 Data source 
+
+Data is being derived from Google search.
+
+3.2 Variables Considered
+The various features of the dataset are explained below:
+
+- Airline: The name of the airline company is stored in the airline column. It is a categorical feature having 6 different airlines.
+
+- Flight: Flight stores information regarding the plane's flight code. It is a categorical feature.
+
+- Source City: City from which the flight takes off. It is a categorical feature having 6 unique cities.
+
+- Departure Time: This is a derived categorical feature obtained created by grouping time periods into bins. It stores information about the departure time and have 6 unique time labels.
+
+- Stops: A categorical feature with 3 distinct values that stores the number of stops between the source and destination cities.
+
+- Arrival Time: This is a derived categorical feature created by grouping time intervals into bins. It has six distinct time labels and keeps information about the arrival time.
+
+- Destination City: City where the flight will land. It is a categorical feature having 6 unique cities.
+
+- Class: A categorical feature that contains information on seat class; it has two distinct values: Business and Economy.
+
+- Duration: A continuous feature that displays the overall amount of time it takes to travel between cities in hours. 10)Days Left: This is a derived characteristic that is calculated by subtracting the trip date by the booking date.
+
+- Price: Target variable stores information of the ticket price.
+
+
+3.3 Data Preprocessing
+
+For model fitting data is preprocessed using LabelEncoder from sklearn.preprocessing module.
+
+
+- we have transform the'airline','source_city','destination_city','departure_time','arrival_time','stops','class' column of dataframe 'df'using 'fit_transform' method involving fitting a LabelEncoder on data and then transforming it
+
+- We have dropped the column 'unnamed'
+ from dataframe 'df'
+
+- We have drop the coumn 'flight' from dataset which is of no use to us in modelling.
+
+
+
+ 4. Visualizing the dataset
+ 
+
+4.1 Libraries used in the process
+- matplotlib
+- seaborn
+
+
+
+4.2 Plots we have used
+- bar graphs
+- line graphs
+- pie charts
+- strip plot
+- scatter plot
+
+4.3 Plot of  Number of flights of Airlines in India.
+
+we draw this plot using sns.countplot for 'airline' column.
+
+![](1img.jpg)
+
+
+- From the plot , we can see 'Vistara' has maximum no. of fights followed by 'Air India' while 'Spice Jet' has least no. of flights
+
+4.4 Plot of Ticket Costs
+
+The seaborn. stripplot() method is used to draw a scatter plot where one of variables passed as argument is a categorical variable.Here the categorical variable is "class of travel". From the above figure, we can see 'Economy' class tickets usually cost between 2500 - 22500 while 'Business' class tickets usually cost between 25000 - 95000
+
+![](2img.jpg)
+
+4.5 Plot of Duration of flights
+
+
+This shows  the distribution of ticket price varying with duration of flight. More no. of green and brown points in the figure is explained by the fact that 'Vistara' and 'Air India' have maximum no. of flights. Clearly , Indigo has more no of short duration flights at comaparatively cheaper price.
+
+![](3img.jpg)
+
+4.6 Plot on Tickets booked before X days
+
+This plot concludes  that ticket price rise slowly till 20 days from the date of flight, then rise sharply till the last day, while dramatically reducing just 1 day before the date of flight. This can be explained by the fact that people usually buy flight tickets within 2-3 weeks of flight which generates more profits for airlines. On last day, prices show dramatic reduction as airlines hope to fill the flight completely due to increase the load factor and decrease the operational cost per passenger.
+
+![](4img.jpg)
+
+4.7 Plot of Departure time and Arrival time
+
+This plot concludes that flights departing late at night are cheapest while those arriving early morning and late night are cheap too. Flights departung in afternoon are relatively cheap as well.
+
+![](5img.jpg)
+
+
+4.8 Plot on Airline ticket price based on the source and destination cities.
+
+ This plot shows that flight departing from Delhi are usually cheaper which can be explained by the fact that Delhi being capital has very strong connectivity with every other city and more no. of freqencies resulting in cheaper ticket prices. Chennai-Bangalore seems to be the most expensive route to fly while Hyderabad is most expensive city to fly.
+ 
+![](6img.jpg)
+
+
+
+
+4.9 Plot of Distribution of most Airlines in economy class
+
+This plots gives us insight about distribition of most Airlines in economy class.
+
+Distribution of Airlines in economy class is as follows:
+
+- Air India : 23.2%
+- Indigo : 20.9%
+- Go First : 11.2%
+- Air Asia : 7.8%
+- Spicejet : 4.4%
+- Vistara : 32.6%
+
+![](7img.jpg)
+
+
+
+4.10 Plot of Total price by Airline in economy class
+
+This barplot shows toatl price by Airline.
+
+-Vistara : $525,173,099.00
+-Air India: $351,012,862.00
+-Indigo : $229,580,207.00
+- Go First : $130,973,972.00
+- Air Asia : $65,858,089.00
+-Spicejet : $55,681,482.00
+
+![](8img.jpg)
+
+
+4.11 Plot of source city in economy class.
+The pie chart provides us detail that delhi is the source city for economy class follows by Mumbai.
+
+![](9img.jpg)
+ 
+
+
+
+4.12 Plot of most airlines in bussiness class and outcome.
+
+![](10img.png)
+
+
+
+4.13 Plot of cities used bussines class tickets
+
+The pie chart provides us detail that Mumbai  is the source city for bussiness class follows by Delhi.
+![](11img.jpg)
+
+
+
+4.14 Correlation Heatmap
+
+The correlation heatmap describes correlation among various fetures of the dataset.
+
+![](12img.jpg)
+
+
+
+5. Modeling
+
+The model is trained on basic Linear Regression model.
+
+We imported test_train_test_split form sklearn.model_selection modeule.
+
+Then we imported LinearRegression classifier from linear_model.
+We have split the dataset fopr training and testing. 80% data is used for training and 20% data is used for testing the model.
+
+After fitting the model we predicted the prices of flight tickets on testing data.
+We also evaluted Mean Absolute Error, Mean Square Error,Mean Absolute Percentage Error.
+
+
+
+6. Coclusion
+
+For the linear regression model on dataset following are the concusions:
+
+-train score 0.9048254651102412
+
+-test score 0.9047473929854847
+
+-r2 score 0.9047473929854847
+
+-MAE 4650.70263783112
+
+-MSE 49101030.427204736
+
+-MAPR 0.443777705784786
+
+
+ 7. References
+ 
+ 
+ 
+# Sentiment Analysis
+## Table of Contents
+### 
+
+## Overview
+
+1. The project delves into assessing customer sentiment towards SpiceJet by employing two distinct sentiment analysis models, namely Naive Bayes and SVC, leveraging the Bag of Words technique for feature extraction.
+
+2. Notably, the Naive Bayes model emerges as the frontrunner, exhibiting enhanced efficacy in identifying positive reviews, as evidenced by its higher F1-score, thereby shedding light on the potential prowess of unsupervised learning paradigms.
+
+3. Furthermore, to bolster the overall accuracy and comprehensiveness of the analysis, proposed enhancements encompass the adoption of advanced text cleaning methodologies, exploration of diverse feature extraction techniques, and meticulous error analysis, all of which are poised to yield deeper insights into customer satisfaction trends and nuances within the SpiceJet ecosystem.
+
+## What is Sentiment Analysis?
+
+Sentiment analysis, also known as opinion mining, is a natural language processing (NLP) technique aimed at determining the sentiment or emotional tone expressed in a piece of text. It involves analyzing text data to discern whether the expressed opinion is positive, negative, or neutral. Sentiment analysis algorithms typically classify text into these categories based on the presence of certain words, phrases, or linguistic patterns that convey sentiment. This analysis can be applied to various types of text data, such as customer reviews, social media posts, news articles, and more, to gauge public opinion, sentiment trends, and customer satisfaction levels.
+
+## How sentiment analysis was applied to Indian airlines?
+
+The objective of this project was to utilize sentiment analysis as a tool to comprehensively understand and analyze the sentiments expressed by customers towards Indian airlines, thereby providing valuable insights into customer satisfaction, sentiment trends, and potential areas for improvement.
+
+## Scope of this Project
+
+This project focuses on sentiment analysis of customer reviews collected from prominent airlines, including Go Air, Air India, Jet Airways, Indigo, and Spicejet. We consider a wide range of review attributes, including the content of the reviews, ratings, and other relevant factors. However, our analysis is limited to text-based reviews and does not cover other forms of feedback such as ratings or surveys.
+
+## Significance of this Analysis
+
+Understanding customer sentiments is essential for airlines to enhance passenger experiences, improve service quality, and make informed business decisions. By analyzing customer reviews and classifying sentiments, airlines can identify areas for improvement, address customer concerns, and ultimately increase customer satisfaction and loyalty. Our project aims to provide valuable insights and actionable recommendations for airlines to better serve their passengers and stay competitive in the industry.
+
+## Objectives of the Project
+
+*Primary Objectives:*
+
+  -Perform sentiment analysis on customer reviews from multiple airlines.
+  
+  -Classify reviews into positive, negative, or neutral sentiments using machine learning techniques.
+  
+  -Identify common themes and patterns in customer feedback across different airlines.
+  
+
+*Secondary Objectives:*
+
+  -Evaluate the performance of different machine learning models for sentiment classification.
+  
+  -Compare sentiment expressions across different airlines and analyze factors influencing passenger perceptions.
+  
+  -Generate actionable insights and recommendations for airlines to improve customer satisfaction and service quality.
+
+*Expected Outcomes:*
+
+  -Development of machine learning models for sentiment classification with high accuracy and
+performance.
+
+  -Insights into customer sentiments and preferences across different airlines.
+  
+  -Recommendations for airlines to address common pain points and improve overall customer satisfaction.
+
+## Libraries Used
+
+*json:* Utilized to read and parse JSON files containing customer reviews from various airlines.
+
+*nltk (Natural Language Toolkit):* Employed for preprocessing text data, including tokenization, stop word removal, and stemming, to prepare it for sentiment analysis.
+
+*textblob:* Used for sentiment analysis tasks, including polarity analysis, to determine the sentiment expressed in customer reviews.
+
+*numpy:* Utilized for numerical computations and array manipulation required for data processing and machine learning tasks.
+
+*matplotlib:* Utilized to create visualizations such as plots and charts to illustrate the results of sentiment analysis and other data analysis tasks.
+
+*pandas:* Used for data manipulation and analysis, including preprocessing structured data such as customer review datasets.
+
+*sklearn (scikit-learn):* Employed for implementing machine learning algorithms, including support vector machines (SVM) and Naive Bayes classifiers, and for model evaluation and validation.
+
+##Data Cleaning
+Using a user defined function we check for the missing values and remove them as scikitlearn package does not work with missing values.
+
+## Data PreProcessing
+
+In preprocessing, the primary libraries used were nltk and string. Here's how they were used:
+
+*1. nltk (Natural Language Toolkit):*
+
+-nltk provides various tools and resources for natural language processing tasks, including tokenization, stopwords removal, stemming, and more.
+
+-Tokenization was performed using nltk's word tokenizer (nltk.word_tokenize()), which splits the text into individual words or tokens.
+
+-Stopwords removal was achieved using nltk's stopwords corpus (nltk.corpus.stopwords), which provides a list of common stopwords in multiple languages.
+
+-Stemming was implemented using nltk's Porter stemmer (nltk.stem.porter.PorterStemmer()), which reduces words to their root form.
+
+**
+-In preprocessing, a user defined function preprocess has been used for removing punctuation marks from the text data.
+
+## Data Visualization
+
+# Plot 1
+
+We have plotted subdivided barplots to show number of positive, negative and neutral reviews for the five airlines using different colours. The number of positive reviews is high for each of the five airlines.
+
+![](sa2.jpg)
+
+#Plot 2
+
+We have observed that fraction of positive reviews is highest for Indigo as well as Jet Airways. The fraction of negative reviews is highest for Air India.
+
+![](sa1.jpg)
+
+## How was SVM used
+
+Support Vector Machines (SVM) were employed as the machine learning model for sentiment classification of customer reviews in this project. SVM was chosen for the following reasons:
+
+*1. Classification Task:* SVM is well-suited for classification tasks, making it ideal for categorizing customer reviews into positive, negative, or neutral sentiments.
+
+*2. High-Dimensional Data:* Customer reviews often contain a large number of features (words or tokens), and SVM can effectively handle high-dimensional data, making it suitable for sentiment analysis tasks.
+
+*3. Non-linear Separability:* SVM can capture complex patterns and relationships in the data, including non-linear relationships between features (words or tokens), which is beneficial for sentiment analysis tasks where relationships may not be linear.
+
+*4. Margin Maximization:* SVM maximizes the margin between the decision boundary and the closest data points, leading to better generalization performance and reduced overfitting, crucial for sentiment analysis tasks requiring robust models.
+
+*5. Performance:* SVM is known for its high accuracy and robustness in classification tasks, making it a suitable choice for sentiment classification in this project.
+
+## Use of Naive Bayes
+
+Naive Bayes played a pivotal role in this project for sentiment classification of customer reviews. Here's why it was chosen:
+
+*1. Text Classification Suitability:* Naive Bayes is well-suited for classifying customer reviews into sentiment categories (positive, negative, or neutral) due to its effectiveness in text classification tasks.
+
+*2. Probabilistic Framework:* It operates within a probabilistic framework, estimating the probability of each sentiment class based on observed features (words or tokens) in the reviews, aligning seamlessly with the project's classification needs.
+
+*3. Efficiency and Scalability:* Naive Bayes offers computational efficiency and scalability, making it suitable for handling large volumes of textual data, crucial for analyzing numerous customer reviews.
+
+*4. Robustness to Feature Independence:* Despite assuming feature independence, Naive Bayes often performs well, even with noisy or irrelevant features in reviews, ensuring reliable sentiment classification.
+
+*5. Baseline Model and Interpretability:* It serves as a reliable baseline model, establishing initial performance benchmarks. Its transparent nature allows stakeholders to understand sentiment classification decisions, fostering insight into review analysis.
+
+In summary, Naive Bayes was strategically chosen for sentiment classification due to its alignment with project objectives, efficacy in text classification, computational efficiency, robustness, and interpretability. Leveraging Naive Bayes facilitated accurate sentiment classification, enabling insightful analysis of customer reviews.
+
+## How is Linear Algebra and Probability applied here
+
+Linear algebra and probability play essential roles in various aspects of the project, particularly in the implementation of machine learning algorithms and data analysis. Here's how they are applied:
+
+1. *Linear Algebra*:
+
+   - *Vectorization*: In natural language processing (NLP), text data is often represented as numerical vectors. Linear algebra concepts such as vectors and matrices are fundamental for representing and manipulating these numerical representations efficiently.
+   
+   - *Feature Representation*: Techniques like CountVectorizer and TfidfVectorizer, which convert text data into numerical feature vectors, rely on linear algebra operations such as dot products and matrix multiplications. These operations are used to transform raw text data into high-dimensional feature spaces suitable for machine learning algorithms.
+   
+   - *Support Vector Machines (SVM)*: SVM is inherently a linear algebra-based algorithm. It works by finding the optimal hyperplane that separates different classes in the feature space. The optimization problem involved in training an SVM model often requires linear algebra techniques such as matrix inversion, dot products, and solving systems of linear equations.
+
+2. *Probability*:
+
+   - *Naive Bayes Classifier*: The Naive Bayes classifier is based on Bayes' theorem, which is a fundamental concept in probability theory. The classifier assumes that features are conditionally independent given the class label, allowing it to compute class probabilities efficiently.
+   
+   - *Sentiment Analysis*: Sentiment analysis tasks involve predicting the sentiment (positive, negative, neutral) of text data based on probabilistic models. Probability distributions, likelihood estimation, and Bayesian inference techniques are utilized to compute the likelihood of different sentiment labels given the observed data.
+   
+   - *Model Evaluation*: Probability plays a crucial role in evaluating machine learning models. Performance metrics such as accuracy, precision, recall, and F1-score are computed based on the probabilities predicted by the models. Additionally, techniques like cross-validation involve probabilistic sampling and averaging to estimate the model's generalization performance.
+
+Overall, linear algebra and probability form the theoretical foundations of many machine learning algorithms and techniques used in the project. They are essential for understanding, implementing, and evaluating these algorithms, ultimately contributing to the success of the sentiment analysis task and the extraction of insights from customer reviews.
